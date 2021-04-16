@@ -11,6 +11,9 @@ class RuletaTest : DescribeSpec({
             val apuestaGanadora = Apuesta(5, "winner@roulette.com")
             val apuestaPerdedora = Apuesta(2, "looser@roulette.com")
             val casino = Casino().apply {
+                // controlamos el número ganador de la ruleta
+                ruleta = StubRuleta(5)
+                //
                 apostar(apuestaGanadora)
                 apostar(apuestaPerdedora)
             }
