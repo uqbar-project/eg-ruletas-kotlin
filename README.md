@@ -1,7 +1,9 @@
 
 # Ejemplo de Testing con Stubs y Mocks - Ruleta Virtual
 
-[![Build Status](https://travis-ci.com/uqbar-project/eg-ruletas-kotlin.svg?branch=master)](https://travis-ci.com/uqbar-project/eg-seguros-kotlin) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=E86YSKSVYYW)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin)
+[![Build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml)
+
+[![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=E86YSKSVYYW)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin)
 
 ## Objetivo
 
