@@ -2,6 +2,10 @@ import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.slot
+import java.awt.image.ShortLookupTable
 
 class RuletaTest : DescribeSpec({
 //    isolationMode = IsolationMode.InstancePerTest
@@ -12,7 +16,7 @@ class RuletaTest : DescribeSpec({
             val apuestaPerdedora = Apuesta(2, "looser@roulette.com")
             val casino = Casino().apply {
                 // controlamos el número ganador de la ruleta
-                ruleta = StubRuleta(5)
+                ruleta = stubRuleta(5)
                 //
                 apostar(apuestaGanadora)
                 apostar(apuestaPerdedora)
@@ -27,3 +31,12 @@ class RuletaTest : DescribeSpec({
         }
     }
 })
+
+fun stubRuleta(numeroGanador: Int): IRuleta {
+    val ruleta = mockk<IRuleta>(relaxUnitFun = true)
+
+    every { ruleta.apuestaGanadora(apuesta = any()) } answers { firstArg<Apuesta>().numeroApostado == numeroGanador }
+
+    return ruleta
+}
+

@@ -3,46 +3,27 @@
 
 [![Build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=stubbing-roulette)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=RdVlEzRc3G)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=stubbing-roulette)
 
-## Branch stubbing-roulette
+## Branch stubbing-roulette-mockk
 
-Arreglamos los _flaky tests_ implementando un _stub_ manual que permite configurar el número ganador de la ruleta virtual:
+En esta variante en lugar de construir nosotros un stub vamos a delegar en el framework [Mockk](https://mockk.io/) la creación del objeto impostor.
+
+Para ello en el test invocamos a una función que crea un **objeto anónimo que respeta la interfaz IRuleta**:
 
 ```kt
-class StubRuleta(val numeroGanador: Int) : IRuleta {
-    override fun elegirNumero() {}
+fun stubRuleta(numeroGanador: Int): IRuleta {
+    val ruleta = mockk<IRuleta>(relaxUnitFun = true)
 
-    override fun apuestaGanadora(apuesta: Apuesta) = apuesta.numeroApostado == numeroGanador
+    every { ruleta.apuestaGanadora(apuesta = any()) } answers { firstArg<Apuesta>().numeroApostado == numeroGanador }
+
+    return ruleta
 }
 ```
 
-En el test reemplazamos la ruleta que elige números al azar por una ruleta fija, que nos permite controlar el número ganador:
+- La función `mockk` trabaja con Generics, se tipa como IRuleta, de esa manera sabemos qué métodos tenemos que definir
+- El parámetro `relaxUnitFun` permite crear un **relaxed stub**, esto significa que por defecto todos los métodos que no devuelvan nada (Unit) se definen con un comportamiento vacío (no necesitamos explícitamente decirle a Mockk que el método `elegirNumero()` no hace nada, como pasaba en el stub manual)
+- Luego la función `every ... answer` permite definir que cuando el objeto ruleta que estamos creando recibe el mensaje apuestaGanadora, con cualquier apuesta (`any()`), responderemos que sí o que no basado en que el número apostado sea el número que nosotros definimos como ganador (es el parámetro de la función `stubRuleta`)
 
-```kt
-describe("Cuando sale un número") {
-    val apuestaGanadora = Apuesta(5, "winner@roulette.com")
-    val apuestaPerdedora = Apuesta(2, "looser@roulette.com")
-    val casino = Casino().apply {
-        // controlamos el número ganador de la ruleta
-        ruleta = StubRuleta(5)
-        //
-        apostar(apuestaGanadora)
-        apostar(apuestaPerdedora)
-    }
-```
-
-De esa manera sabemos fehacientemente que quien apostó al 5 debería ganar, y el que apuesta al 2 pierde:
-
-```kt
-val apuestasGanadoras = casino.realizarRondaApuestasRuleta()
-it("La apuesta ganadora se devuelve") {
-    apuestaGanadora shouldBeIn apuestasGanadoras
-}
-it ("La apuesta perdedora se filtra") {
-    apuestaPerdedora shouldNotBeIn apuestasGanadoras
-}
-```
-
-El objeto impostor es un _stub_ sobre la ruleta, porque nuestros tests estudian el estado en el que queda la aplicación (preguntando por las apuestas ganadoras). Este approach se parece bastante a lo que venimos trabajando hasta el momento.
+El objeto impostor sigue siendo un _stub_ sobre la ruleta, porque nuestros tests estudian el estado en el que queda la aplicación (preguntando por las apuestas ganadoras). Este approach se parece bastante a lo que venimos trabajando hasta el momento.
 
 ## Diagrama de clases de la solución
 
