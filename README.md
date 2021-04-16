@@ -46,4 +46,4 @@ El objeto impostor es un _stub_ sobre la ruleta, porque nuestros tests estudian 
 
 ## Diagrama de clases de la solución
 
-![diagrama de clases](./images/diagramaClases.png)
+![diagrama de clases](./images/diagramaClases2.png)
