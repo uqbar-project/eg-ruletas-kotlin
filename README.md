@@ -3,27 +3,65 @@
 
 [![Build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=stubbing-roulette-mockk)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=RdVlEzRc3G)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=stubbing-roulette-mockk)
 
-## Branch stubbing-roulette-mockk
+## Branch mock-tests
 
-En esta variante en lugar de construir nosotros un stub vamos a delegar en el framework [Mockk](https://mockk.io/) la creación del objeto impostor.
-
-Para ello en el test invocamos a una función que crea un **objeto anónimo que respeta la interfaz IRuleta**:
+Ahora el método en Casino que orquesta la llamada a la ruleta y detecta las apuestas ganadoras no devuelve esa información, sino que envía un mail a los ganadores.
 
 ```kt
-fun stubRuleta(numeroGanador: Int): IRuleta {
-    val ruleta = mockk<IRuleta>(relaxUnitFun = true)
+fun realizarRondaApuestasRuleta() {
+    ruleta.elegirNumero()
 
-    every { ruleta.apuestaGanadora(apuesta = any()) } answers { firstArg<Apuesta>().numeroApostado == numeroGanador }
-
-    return ruleta
+    return apuestas
+        .filter { apuesta -> ruleta.apuestaGanadora(apuesta) }
+        .forEach { apuesta -> mailSender.sendMail(Mail(apuesta.casillaCorreo, "Ganaste!"))}
 }
 ```
 
-- La función `mockk` trabaja con Generics, se tipa como IRuleta, de esa manera sabemos qué métodos tenemos que definir
-- El parámetro `relaxUnitFun` permite crear un **relaxed stub**, esto significa que por defecto todos los métodos que no devuelvan nada (Unit) se definen con un comportamiento vacío (no necesitamos explícitamente decirle a Mockk que el método `elegirNumero()` no hace nada, como pasaba en el stub manual)
-- Luego la función `every ... answer` permite definir que cuando el objeto ruleta que estamos creando recibe el mensaje apuestaGanadora, con cualquier apuesta (`any()`), responderemos que sí o que no basado en que el número apostado sea el número que nosotros definimos como ganador (es el parámetro de la función `stubRuleta`)
+## Cambiando la forma de testear
 
-El objeto impostor sigue siendo un _stub_ sobre la ruleta, porque nuestros tests estudian el estado en el que queda la aplicación (preguntando por las apuestas ganadoras). Este approach se parece bastante a lo que venimos trabajando hasta el momento.
+Si el método no devuelve nada, porque solo produce el efecto de envío de mails, ¿cómo podemos hacer para testear? Aquí es donde activamos los tests basados en **comportamiento** en lugar del **estado**, y para eso
+
+- continuamos trabajando con una ruleta ad-hoc, que permite fijar un número ganador, pero además
+- vamos a mockear el objeto que envía el mail (definido por la interfaz IMailSender)
+
+No nos interesa fingir ningún comportamiento en particular, solo queremos envolverlo con el framework Mockk:
+
+```kt
+fun mockedMailSender(): IMailSender = mockk<IMailSender>(relaxUnitFun = true)
+```
+
+Luego asignamos ese objeto al casino antes de hacer la llamada al método principal:
+
+```kt
+    describe("Dada una ruleta en un casino") {
+        describe("Cuando sale un número") {
+            ...
+            val mockedMailSender = mockedMailSender()
+            val casino = Casino().apply {
+                // controlamos el número ganador de la ruleta y el objeto que envía mails\\
+                ruleta = mockRuleta(5)
+                mailSender = mockedMailSender
+                //
+```
+
+## Verificación en los tests
+
+Una vez que le pedimos al casino que realice la ronda de apuestas, vamos a verificar
+
+- que el casino le envíe el mail a la apuesta ganadora, mediante la pregunta `verify` que valida que se envíe un mensaje `sendMail` al mailSender mockeado con los parámetros que esperamos
+- de la misma manera, no se debe enviar ningún mail al perdedor
+
+```kt
+    val apuestasGanadoras = casino.realizarRondaApuestasRuleta()
+    it("El ganador recibe un mail") {
+        verify(exactly = 1) { mockedMailSender.sendMail(mail = Mail(apuestaGanadora.casillaCorreo, "Ganaste!")) }
+    }
+    it ("El perdedor no recibe mail") {
+        verify(exactly = 0) { mockedMailSender.sendMail(mail = Mail(apuestaPerdedora.casillaCorreo, "Ganaste!")) }
+    }
+```
+
+No estamos preguntando por el estado de nuestro sistema (como podría ser si en la casilla de mail del ganador hay un mail), sino por el envío de mensajes a objetos anónimos cuyo comportamiento solo nos interesa para hacer verificaciones en nuestros tests.
 
 ## Diagrama de clases de la solución
 
