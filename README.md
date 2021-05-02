@@ -1,7 +1,7 @@
 
 # Ejemplo de Testing con Stubs y Mocks - Ruleta Virtual
 
-[![build](https://github.com/uqbar-project/eg-vehiculos-kotlin/actions/workflows/build.yml/badge.svg)](https://github.com/uqbar-project/eg-vehiculos-kotlin/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=RdVlEzRc3G)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=mock-tests)
+[![Build Status](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=mock-tests)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/mock-tests/graph/badge.svg)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=mock-tests)
 
 ## Branch mock-tests
 
