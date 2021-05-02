@@ -1,9 +1,9 @@
 
 # Ejemplo de Testing con Stubs y Mocks - Ruleta Virtual
 
-[![Build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg?token=E86YSKSVYYW)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin)
+[![Build Status](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=master)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/master/graph/badge.svg)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=master)
 
-> El build fallan porque los tests no pueden controlar a una ruleta que devuelve números al azar (ver explicación más abajo)
+> El build falla porque los tests no pueden controlar a una ruleta que devuelve números al azar (ver explicación más abajo)
 
 ## Objetivo
 
@@ -22,7 +22,7 @@ Cada branch tiene una introducción y una explicación detallada.
 - `master`: los tests son _flaky_. Fallan (casi siempre) porque la ruleta devuelve números en forma aleatoria, y no es posible repetir las apuestas ganadoras.
 - `stubbing-roulette`: arreglamos los _flaky tests_ implementando un _stub_ manual que permite configurar el número ganador de la ruleta virtual.
 - `stubbing-roulette-mockk`: el mismo _stub_ del branch 02 pero implementado con el framework Mockk. Tanto este branch como el anterior muestran tests de estado.
-- `mock-tests`: usamos un _mock_ con Mockk que simula el envío de mails para mostrar cómo es un test de comportamiento.
+- `master`: usamos un _mock_ con Mockk que simula el envío de mails para mostrar cómo es un test de comportamiento.
 
 
 ## Material adicional
