@@ -1,3 +1,5 @@
+package ar.edu.unsam.algo2
+
 import kotlin.random.Random
 
 interface IRuleta {

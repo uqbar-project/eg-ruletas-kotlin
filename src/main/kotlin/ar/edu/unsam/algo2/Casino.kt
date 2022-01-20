@@ -1,3 +1,5 @@
+package ar.edu.unsam.algo2
+
 class Casino {
     var ruleta: IRuleta = Ruleta()
     val apuestas: MutableList<Apuesta> = mutableListOf()
