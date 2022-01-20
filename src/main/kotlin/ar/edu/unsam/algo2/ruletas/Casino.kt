@@ -1,4 +1,4 @@
-package ar.edu.unsam.algo2
+package ar.edu.unsam.algo2.ruletas
 
 class Casino {
     var ruleta: IRuleta = Ruleta()

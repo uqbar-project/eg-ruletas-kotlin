@@ -1,7 +1,7 @@
-package ar.edu.unsam.algo2
+package ar.edu.unsam.algo2.ruletas
 
-import ar.edu.unsam.algo2.Apuesta
-import ar.edu.unsam.algo2.IRuleta
+import ar.edu.unsam.algo2.ruletas.Apuesta
+import ar.edu.unsam.algo2.ruletas.IRuleta
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.every
