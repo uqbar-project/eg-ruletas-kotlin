@@ -1,3 +1,5 @@
+package ar.edu.unsam.algo2.ruletas
+
 class StubRuleta(val numeroGanador: Int) : IRuleta {
     override fun elegirNumero() {}
 

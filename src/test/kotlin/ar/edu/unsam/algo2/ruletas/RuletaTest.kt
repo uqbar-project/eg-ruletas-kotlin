@@ -1,4 +1,5 @@
-import io.kotest.core.spec.IsolationMode
+package ar.edu.unsam.algo2.ruletas
+
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
