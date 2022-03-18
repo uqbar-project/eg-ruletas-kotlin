@@ -1,11 +1,11 @@
-import io.kotest.core.spec.IsolationMode
+package ar.edu.unsam.algo2.ruletas
+
+import ar.edu.unsam.algo2.ruletas.Casino
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
-import java.awt.image.ShortLookupTable
 
 class RuletaTest : DescribeSpec({
 //    isolationMode = IsolationMode.InstancePerTest
