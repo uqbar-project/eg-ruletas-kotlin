@@ -21,7 +21,7 @@ Cada branch tiene una introducción y una explicación detallada.
 
 - `master`: los tests son _flaky_. Fallan (casi siempre) porque la ruleta devuelve números en forma aleatoria, y no es posible repetir las apuestas ganadoras.
 - `stubbing-roulette`: arreglamos los _flaky tests_ implementando un _stub_ manual que permite configurar el número ganador de la ruleta virtual.
-- `stubbing-roulette-mockk`: el mismo _stub_ del branch 02 pero implementado con el framework Mockk. Tanto este branch como el anterior muestran tests de estado.
+- `stubbing-roulette-mockk`: el mismo _stub_ del branch `stubbing-roulette` pero implementado con el framework Mockk. Tanto este branch como el anterior muestran tests de estado.
 - `master`: usamos un _mock_ con Mockk que simula el envío de mails para mostrar cómo es un test de comportamiento.
 
 
