@@ -1,7 +1,5 @@
 package ar.edu.unsam.algo2.ruletas
 
-import ar.edu.unsam.algo2.ruletas.Apuesta
-import ar.edu.unsam.algo2.ruletas.IRuleta
 import io.kotest.core.spec.IsolationMode
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.every
@@ -18,7 +16,7 @@ class RuletaTest : DescribeSpec({
             val mockedMailSender = mockedMailSender()
             val casino = Casino().apply {
                 // controlamos el número ganador de la ruleta y el objeto que envía mails\\
-                ruleta = mockRuleta(5)
+                ruleta = stubRuleta(5)
                 mailSender = mockedMailSender
                 //
                 apostar(apuestaGanadora)
@@ -26,10 +24,18 @@ class RuletaTest : DescribeSpec({
             }
             val apuestasGanadoras = casino.realizarRondaApuestasRuleta()
             it("El ganador recibe un mail") {
-                verify(exactly = 1) { mockedMailSender.sendMail(mail = Mail(apuestaGanadora.casillaCorreo, "Ganaste!")) }
+                verify(exactly = 1) {
+                    mockedMailSender.sendMail(
+                        mail = Mail(apuestaGanadora.casillaCorreo, "Ganaste!")
+                    )
+                }
             }
             it ("El perdedor no recibe mail") {
-                verify(exactly = 0) { mockedMailSender.sendMail(mail = Mail(apuestaPerdedora.casillaCorreo, "Ganaste!")) }
+                verify(exactly = 0) {
+                    mockedMailSender.sendMail(
+                        mail = Mail(apuestaPerdedora.casillaCorreo, "Ganaste!")
+                    )
+                }
             }
         }
     }
@@ -37,7 +43,7 @@ class RuletaTest : DescribeSpec({
 
 fun mockedMailSender(): IMailSender = mockk<IMailSender>(relaxUnitFun = true)
 
-fun mockRuleta(numeroGanador: Int): IRuleta {
+fun stubRuleta(numeroGanador: Int): IRuleta {
     val ruleta = mockk<IRuleta>(relaxUnitFun = true)
 
     every { ruleta.apuestaGanadora(apuesta = any()) } answers { firstArg<Apuesta>().numeroApostado == numeroGanador }

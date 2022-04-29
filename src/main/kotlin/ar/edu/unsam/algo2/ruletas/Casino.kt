@@ -12,8 +12,10 @@ class Casino {
     fun realizarRondaApuestasRuleta() {
         ruleta.elegirNumero()
 
-        return apuestas
+        apuestas
             .filter { apuesta -> ruleta.apuestaGanadora(apuesta) }
-            .forEach { apuesta -> mailSender.sendMail(Mail(apuesta.casillaCorreo, "Ganaste!"))}
+            .forEach { apuesta -> mailSender.sendMail(
+                Mail(apuesta.casillaCorreo, "Ganaste!")
+            )}
     }
 }
