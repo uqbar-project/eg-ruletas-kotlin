@@ -15,14 +15,14 @@ class RuletaTest : DescribeSpec({
             val apuestaPerdedora = Apuesta(2, "looser@roulette.com")
             val mockedMailSender = mockedMailSender()
             val casino = Casino().apply {
-                // controlamos el número ganador de la ruleta y el objeto que envía mails\\
+                // controlamos el número ganador de la ruleta y el objeto que envía mails
                 ruleta = stubRuleta(5)
                 mailSender = mockedMailSender
                 //
                 apostar(apuestaGanadora)
                 apostar(apuestaPerdedora)
             }
-            val apuestasGanadoras = casino.realizarRondaApuestasRuleta()
+            casino.realizarRondaApuestasRuleta()
             it("El ganador recibe un mail") {
                 verify(exactly = 1) {
                     mockedMailSender.sendMail(
