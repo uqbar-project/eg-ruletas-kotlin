@@ -27,5 +27,5 @@ Cada branch tiene una introducción y una explicación detallada.
 
 ## Material adicional
 
-- [Video explicativo (todavía en Xtend)](https://www.youtube.com/watch?v=V5D43EcZkQ0)
+- [Video explicativo](https://youtube.com/watch?v=6vR6QyuLogM)
 - [Diapositivas](https://docs.google.com/presentation/d/1hyY1zyKUrs1qlrMuN_KuagVCmOzjv_XpPsXI7RLnSHk/edit#slide=id.p)
