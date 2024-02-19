@@ -1,7 +1,7 @@
 
 # Ejemplo de Testing con Stubs y Mocks - Ruleta Virtual
 
-[![Build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/gradle-build.yml/badge.svg?branch=stubbing-roulette-mockk)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/stubbing-roulette-mockk/graph/badge.svg?token=RdVlEzRc3G)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=stubbing-roulette-mockk)
+[![build](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/build.yml/badge.svg?branch=stubbing-roulette-mockk)](https://github.com/uqbar-project/eg-ruletas-kotlin/actions/workflows/build.yml) [![codecov](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin/branch/stubbing-roulette-mockk/graph/badge.svg?token=RdVlEzRc3G)](https://codecov.io/gh/uqbar-project/eg-ruletas-kotlin?branch=stubbing-roulette-mockk)
 
 ## Branch stubbing-roulette-mockk
 
